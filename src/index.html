@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>TextAlive App API Demo</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      top: 0;
+      left: 0;
+      padding: 0;
+    }
+
+    canvas {
+      opacity: 0;
+      position: absolute;
+      transition: all 200ms;
+    }
+
+    #player-outer.ready canvas {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    #player-outer.ready canvas.playing {
+      cursor: ew-resize;
+      opacity: 1;
+    }
+
+    #play-button {
+      position: absolute;
+      z-index: -1;
+      display: flex;
+      color: grey;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      font-size: min(50vw, 50vh);
+      opacity: 0;
+    }
+
+    #player-outer.ready #play-button {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="player-outer">
+    <div id="play-button">▶</div>
+  </div>
+  <script src="main.js"></script>
+</body>
+
+</html>
