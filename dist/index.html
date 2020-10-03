@@ -12,9 +12,14 @@
       transition: all 200ms;
     }
 
-    canvas.ready {
+    #player-outer.ready canvas {
       cursor: pointer;
       opacity: 0.5;
+    }
+
+    #player-outer.ready canvas.playing {
+      cursor: ew-resize;
+      opacity: 1;
     }
 
     #play-button {
@@ -27,9 +32,9 @@
       width: 100vw;
       height: 100vh;
       font-size: min(50vw, 50vh);
+      opacity: 0;
     }
 
-    canvas.playing {
-      cursor: ew-resize;
+    #player-outer.ready #play-button {
       opacity: 1;
     }</style></head><body><div id="player-outer"><div id="play-button">▶</div></div><script src="main.js"></script><script src="main.js"></script></body></html>
