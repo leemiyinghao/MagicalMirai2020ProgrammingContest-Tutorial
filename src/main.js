@@ -31,6 +31,7 @@ class PVScene {
       position: null,
       beat: null,
       chorus: null,
+      chord: null,
       phrase: null,
       word: null,
       char: null,
@@ -128,7 +129,7 @@ class PVScene {
         // 定時同步 TextAlive App API 與 Three.js 各自的時間
         // 由於 Three.js render 執行頻率會比 onTimeUpdate 或 onMediaSeek 高，分開處理可以避免掉 frame
         let now = Date.now();
-        if(this.groundZero - (now - this.playerProgress.position) > 100){
+        if (this.groundZero - (now - this.playerProgress.position) > 100) {
           this.groundZero = now - this.playerProgress.position;
         }
       },
@@ -173,7 +174,7 @@ class PVScene {
       let geometry = new THREE.RingGeometry(4.9, 5, 5);
       let material = new THREE.MeshBasicMaterial({
 
-        // 顏色根據目前和弦進行判斷使用彩色或灰色
+        // 顏色根據目前副歌判斷使用彩色或灰色
         color: this.colorful ? this.colorSpinner.pick() : 0x393939,
         side: THREE.DoubleSide
       });
@@ -188,14 +189,20 @@ class PVScene {
 
     // 取得並更新和弦進行（Chord Progression）資訊
     // 
-    // 樂理知識部分請參考：
-    // 為什麼流行歌聽起來都這麼像？ - 好和弦
-    // https://www.youtube.com/watch?v=wxJImbUCyJw
+    // chord.duration: 持續時間，毫秒
+    // chord.index: 在樂曲中的位置，從 0 開始
+    // chord.next: 指向下一個
+    // chord.previous: 指向上一個
+    // chord.startTime: 開始時間，毫秒
+    // chord.endTime: 結束時間，毫秒
+    this.playerProgress.chord = this.player.video.findChord(now);
+
+    // 取得並更新副歌資訊
     // 
     // chorus.duration: 持續時間，毫秒
     // chorus.index: 在樂曲中的位置，從 0 開始
-    // chorus.next: 指向下一個節拍
-    // chorus.previous: 指向上一個節拍
+    // chorus.next: 指向下一個副歌
+    // chorus.previous: 指向上一個副歌
     // chorus.startTime: 開始時間，毫秒
     // chorus.endTime: 結束時間，毫秒
     let chorus = this.player.findChorus(now);
@@ -203,7 +210,7 @@ class PVScene {
       this.playerProgress.chorus = chorus;
       console.log("update chorus:", chorus);
 
-      // 利用和弦進行判斷副歌，並切換五邊環的顯示顏色
+      // 切換五邊環的顯示顏色
       if (chorus) {
         this.colorful = true;
       } else {
@@ -293,7 +300,7 @@ class PVScene {
       this.lyrics.push(textMeshes);
 
       console.log(`${phrase.startTime}：「${wordsOfPhrase.join(" ")}」`);
-    
+
       phrase = phrase.next;
     }
     this.lyrics.forEach((line, lineIdx) => {
@@ -314,7 +321,7 @@ class PVScene {
     this.scene = new THREE.Scene();
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0xffffff, 1); 
+    this.renderer.setClearColor(0xffffff, 1);
     document.getElementById("player-outer").appendChild(this.renderer.domElement);
 
     // 綁定滑鼠事件
@@ -444,7 +451,7 @@ class PVScene {
 
 // 愛されなくても君がいる / ピノキオピー feat. 初音ミク
 const pvScene = new PVScene("https://www.youtube.com/watch?v=ygY2qObZv24");
-// 
+//
 // ブレス・ユア・ブレス / 和田たけあき feat. 初音ミク
 // const pvScene = new PVScene("http://www.youtube.com/watch?v=a-Nf3QUFkOU");
 // 
