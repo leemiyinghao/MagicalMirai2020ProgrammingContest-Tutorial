@@ -195,7 +195,7 @@ class PVScene {
     // chord.previous: 指向上一個
     // chord.startTime: 開始時間，毫秒
     // chord.endTime: 結束時間，毫秒
-    this.playerProgress.chord = this.player.video.findChord(now);
+    this.playerProgress.chord = this.player.findChord(now);
 
     // 取得並更新副歌資訊
     // 
@@ -450,10 +450,10 @@ class PVScene {
 }
 
 // 愛されなくても君がいる / ピノキオピー feat. 初音ミク
-const pvScene = new PVScene("https://www.youtube.com/watch?v=ygY2qObZv24");
+// const pvScene = new PVScene("https://www.youtube.com/watch?v=ygY2qObZv24");
 //
 // ブレス・ユア・ブレス / 和田たけあき feat. 初音ミク
 // const pvScene = new PVScene("http://www.youtube.com/watch?v=a-Nf3QUFkOU");
 // 
 // グリーンライツ・セレナーデ / Omoi feat. 初音ミク
-// const pvScene = new PVScene("https://www.youtube.com/watch?v=XSLhsjepelI");
+const pvScene = new PVScene("https://www.youtube.com/watch?v=XSLhsjepelI");
