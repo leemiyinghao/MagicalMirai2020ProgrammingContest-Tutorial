@@ -1,6 +1,5 @@
 import { Player } from "textalive-app-api";
-import THREE from "three.js";
-
+import * as THREE from "three";
 class ColorSpinner {
   constructor() {
     this.colorPtr = 0;
@@ -26,9 +25,6 @@ class PVScene {
 
     // 初始化 TextAlive App
     this.player = new Player({ app: true });
-
-    // 串接 HTML 物件
-    this.controls = document.querySelector("#controls");
 
     // 目前播放資訊
     this.playerProgress = {
