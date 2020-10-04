@@ -42,6 +42,10 @@
       opacity: 0;
     }
 
+    #player-outer.ready h1 {
+      display: none;
+    }
+
     #player-outer.ready #play-button {
       opacity: 1;
     }
@@ -50,6 +54,7 @@
 
 <body>
   <div id="player-outer">
+    <h1>Loading...</h1>
     <div id="play-button">▶</div>
   </div>
   <script src="main.js"></script>
