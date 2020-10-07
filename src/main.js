@@ -267,25 +267,29 @@ class PVScene {
       //   S: 記号 (Symbol)
       //   X: その他 (other)
       let word = phrase.firstWord;
+      const fontSize = 64;
+      const marginSize = 4;
 
       while (word && word.startTime < phrase.endTime) {
         wordsOfPhrase.push(`${word.text}（${word.pos}）`);
 
         // 利用 canvas 將歌詞貼到 Mesh 上
-        const canvas = document.createElement('canvas');
-        canvas.width = word.text.length * (512 + 32);
-        canvas.height = 512 + 32;
-        const ctx = canvas.getContext('2d');
-
+        let canvas = document.createElement('canvas');
+        canvas.className = "canvas";
+        canvas.width = word.text.length * (fontSize + marginSize);
+        canvas.height = fontSize + marginSize;
+        let ctx = canvas.getContext('2d');
+        if (ctx === null) {
+          alert("Sorry, it seems your device is out of memory.");
+        }
         // 隨詞性更改字體
         if (word.pos === "N") {
-          ctx.font = "bold 512px serif";
+          ctx.font = `bold ${fontSize}px serif`;
         } else {
-          ctx.font = "420px sans";
+          ctx.font = `${fontSize * 0.8}px sans`;
         }
         ctx.fillStyle = "#393939";
-        ctx.fillText(word.text, 0, 512);
-
+        ctx.fillText(word.text, 0, fontSize);
         textMeshes.push({
           obj: word,
           mesh: new THREE.Mesh(
@@ -335,6 +339,13 @@ class PVScene {
       0.1,
       1000
     );
+
+    // 視窗大小改變時重算
+    window.addEventListener("resize", () => {
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+    })
     // 初始相機位置
     this.camera.position.set(-1.2, 0, 5);
 

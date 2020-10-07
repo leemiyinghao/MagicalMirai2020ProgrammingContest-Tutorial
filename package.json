@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx webpack",
-    "watch": "webpack-dev-server --mode development"
+    "watch": "webpack-dev-server --mode development --open --host 0.0.0.0"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +18,10 @@
     "three.js": "^0.77.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-latest": "^6.24.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
